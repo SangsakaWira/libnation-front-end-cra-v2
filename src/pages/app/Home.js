@@ -30,14 +30,13 @@ function Home() {
     return (
         <>
             <SearchBar title="Explore all books available" ></SearchBar>
-
             {/* Looping and Conditional */}
             <div className="book">
                 {books.map(book => {
                     if (book.bought) {
-                        return (<CardBook image={book.image} title={book.title} price={book.price} description={book.description} button={"Add to Cart"} />)
+                        return (<CardBook key={book.title} image={book.image} title={book.title} price={book.price} description={book.description} button={"Add to Cart"} />)
                     } else {
-                        return (<CardBook image={book.image} title={book.title} price={book.price} description={book.description} button={"Read"} />)
+                        return (<CardBook key={book.title} image={book.image} title={book.title} price={book.price} description={book.description} button={"Read"} />)
                     }
                 })}
             </div>

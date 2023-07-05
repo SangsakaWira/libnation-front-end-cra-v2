@@ -1,6 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 function NavBar(){
+
+    let navigate = useNavigate()
+
+    const logout = () =>{
+        if (window.confirm("Are you sure?")) {
+            localStorage.removeItem("token")
+            navigate("/login")
+        }
+    }
+
     return(
         <>
            <header>
@@ -16,6 +26,7 @@ function NavBar(){
                             <li className="nav-item"><Link to="/my-book" >My Books</Link></li>
                             <li className="nav-item"><Link to="/add-book" >Add Book</Link></li>
                             <li className="nav-item"><Link to="/checkout">Checkout</Link></li>
+                            <li className="nav-item" onClick={logout}>Logout</li>
                         </ul>
                     </div>
                     <div className="nav-right">
