@@ -1,43 +1,62 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardBook from "../../components/CardBook";
 import SearchBar from "../../components/SearchBar"
+import { API } from '../../constants'
+import jwt_decode from "jwt-decode";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import axios from "axios";
 
 function Home() {
 
-    const [books] = useState([{
-        image: "assets/images/image-1.png",
-        title: "Harry Potter",
-        price: "Rp 150.000",
-        description: "Lorem Ipsum",
-        button: "Add to Cart",
-        bought: false
-    }, {
-        image: "assets/images/image-2.png",
-        title: "Harry Potter II",
-        price: "Rp 250.000",
-        description: "Lorem Ipsum",
-        button: "Read",
-        bought: true
-    }, {
-        image: "assets/images/image-3.png",
-        title: "Harry Potter III",
-        price: "Rp 200.000",
-        description: "Lorem Ipsum",
-        button: "Read",
-        bought: true
-    }])
+    const [books, setBooks] = useState([])
+    const [user,setUser] = useState({})
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        getBooks()
+        getUserData()
+    }, [])
+
+    const getUserData = () =>{
+        const token = localStorage.getItem('token')
+        const decoded = jwt_decode(token)
+        axios({
+            method: 'get',
+            url: `${API}/user/${decoded.id_user}`,
+            headers: {
+                token: localStorage.getItem("token")
+            }
+        }).then(response => {
+            setUser(response.data)
+        }).catch(err=>{
+            localStorage.removeItem("token")
+            navigate("/login")
+        })
+    }
+
+    const getBooks = () =>{
+        axios({
+            method: 'get',
+            url: `${API}/book`,
+            headers:{
+                token:localStorage.getItem("token")
+            }
+        }).then(response=>{
+            setBooks(response.data)
+        }).catch(err=>{
+            localStorage.removeItem("token")
+            navigate("/login")
+        })
+    }
 
     return (
         <>
             <SearchBar title="Explore all books available" ></SearchBar>
             {/* Looping and Conditional */}
             <div className="book">
-                {books.map(book => {
-                    if (book.bought) {
-                        return (<CardBook key={book.title} image={book.image} title={book.title} price={book.price} description={book.description} button={"Add to Cart"} />)
-                    } else {
-                        return (<CardBook key={book.title} image={book.image} title={book.title} price={book.price} description={book.description} button={"Read"} />)
-                    }
+                {books.map((book) => {
+                    return (<CardBook key={book._id} bookId={book._id} image={book.image} title={book.judul} price={book.harga} description={book.deskripsi} edit={false} button={user.carts?.includes(book._id) ? "Already in Cart" : "Add to Cart"} />)
                 })}
             </div>
         </>

@@ -37,12 +37,15 @@ html {
   }
 }
 body {
+
+  margin: 0px;
+  padding: 0px;
   /* Improve text rendering */
   -webkit-font-smoothing: antialiased;
   /* https://marco.org/2012/11/15/text-rendering-optimize-legibility */
   text-rendering: optimizeSpeed;
   /* Allow percentage-based heights in the application */
-  min-block-size: 100%;
+  /* min-block-size: 100%; */
   /* https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter#example_2 */
   /* scrollbar-gutter: stable both-edges; Removed until this bug is fixed: https://bugs.chromium.org/p/chromium/issues/detail?id=1318404#c2 */
 }
@@ -205,12 +208,12 @@ body {
 }
 
 .heading-1 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 
 .heading-2 {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
 }
 
@@ -235,7 +238,7 @@ section {
 }
 .input-field label {
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 .input-field input {
   border: 1px solid #000000;
@@ -251,7 +254,7 @@ section {
   transition: 0.3s ease;
   font-weight: 700;
   color: #fff;
-  font-size: 1.5em;
+  font-size: 1.2em;
   padding: 20px 0;
   -webkit-transition: 0.3s ease;
   -moz-transition: 0.3s ease;
@@ -264,6 +267,10 @@ section {
 
 .btn-primary {
   background-color: #000;
+}
+
+.btn-danger {
+  background-color: red;
 }
 
 .btn-secondary {
@@ -357,7 +364,7 @@ input:focus {
   }
 }
 .nav-item {
-  font-size: 1.5rem;
+  font-size: 1rem;
   transition: 0.3s ease;
   -webkit-transition: 0.3s ease;
   -moz-transition: 0.3s ease;
@@ -373,6 +380,7 @@ input:focus {
   -moz-column-gap: 10px;
        column-gap: 10px;
 }
+
 .nav-ellipse {
   width: 54px;
   height: 54px;
@@ -383,6 +391,13 @@ input:focus {
   -ms-border-radius: 100%;
   -o-border-radius: 100%;
 }
+
+@media (max-width: 1000px) {
+  .nav-ellipse {
+    display: none;
+  }
+}
+
 .nav-mobile {
   cursor: pointer;
 }
@@ -402,13 +417,14 @@ input:focus {
 }
 
 .login {
+  margin-top: 50px;
+  align-items: center;
   width: 80%;
-  margin-top: 20px;
   margin-inline: auto;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
-  background-color: white;
   padding: 40px;
+  background-color: white;
 }
 
 .login-logo {
@@ -445,7 +461,7 @@ input:focus {
 }
 .search-wrap input {
   padding: 17px 23px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   width: 80%;
   border: 1px solid transparent;
@@ -456,11 +472,11 @@ input:focus {
   -o-border-radius: 15px 0 0 15px;
 }
 .search-wrap input::-moz-placeholder {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
 }
 .search-wrap input::placeholder {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
 }
 .search-wrap button {
@@ -474,33 +490,60 @@ input:focus {
 
 .book {
   margin-top: 40px;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
   flex-direction: column;
   align-items: center;
   gap: 40px;
 }
+
 .book-card {
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
-  padding: 12px 14px;
+  padding: 25px 14px;
 }
+
+@media (max-width: 1000px) {
+  .book-card {
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    padding: 25px 14px;
+  }
+}
+
 .book-card-image {
-  padding: 25px 45px 0 45px;
+  padding: 0px;
+  width: 100%;
+}
+.book-image {
+  margin: auto;
+  object-fit: cover;
+  height: 450px;
+  width: 320px;
 }
 .book-card-detail {
   padding: 5px;
+  margin: auto;
+  width: 320px;
 }
 .book-card button {
   width: 100%;
+  margin: auto;
   margin-top: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
 }
-@media (min-width: 1000px) {
+
+@media (max-width: 1000px) {
   .book {
-    flex-direction: row;
-    align-items: flex-start;
+    margin-top: 40px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -529,7 +572,7 @@ input:focus {
 .add-book-form .button-wrap {
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 10px;
   row-gap: 40px;
 }
 @media (min-width: 1000px) {
@@ -569,12 +612,6 @@ input:focus {
 .checkout-card-thumbnail {
   width: 120px;
   height: 140px;
-  border-radius: 28px;
-  background-color: #d9d9d9;
-  -webkit-border-radius: 28px;
-  -moz-border-radius: 28px;
-  -ms-border-radius: 28px;
-  -o-border-radius: 28px;
 }
 .checkout-wallet-card {
   border-radius: 28px;
